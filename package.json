@@ -5,11 +5,12 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "run-command": "./build/index.js"
+    "mcp-server-cli": "./build/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && chomd +x ./build/index.js"
+    "clean": "rm -rf build",
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "watch": "npm run build && tsc --watch"
   },
   "repository": {
     "type": "git",
