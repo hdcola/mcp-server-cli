@@ -1,0 +1,39 @@
+{
+  "name": "mcp-server-cli",
+  "version": "0.0.1",
+  "description": "Model Context Protocol server to run shell scripts or commands",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "run-command": "./build/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && chomd +x ./build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdcola/mcp-server-cli.git"
+  },
+  "keywords": [
+    "mcp",
+    "server",
+    "cli",
+    "shell",
+    "script"
+  ],
+  "author": "hdcola",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hdcola/mcp-server-cli/issues"
+  },
+  "homepage": "https://github.com/hdcola/mcp-server-cli#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  }
+}
