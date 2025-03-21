@@ -1,8 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { exec } from "child_process";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { runCommand } from "./run-command.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -14,26 +13,7 @@ const server = new McpServer({
   version: package_version,
 });
 
-// Run a command on the shell and return stdout and stderr
-async function runCommand(command: string): Promise<CallToolResult> {
-  return new Promise((resolve) => {
-    exec(command, (error, stdout, stderr) => {
-      // Optionally, error handling can be added here.
-      resolve({
-        content: [
-          {
-            type: "text",
-            text: stdout.trim()
-          },
-          {
-            type: "text",
-            text: stderr.trim() ? `Error: ${stderr.trim()}` : ""
-          }
-        ]
-      });
-    });
-  });
-}
+
 
 server.tool("run-command",
   "Run a command on the shell",
@@ -56,3 +36,4 @@ main().catch((error) => {
   console.error(error);
   process.exit(1);
 });
+
