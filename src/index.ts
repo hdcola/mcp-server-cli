@@ -3,11 +3,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { runCommand } from "./run-command.js";
+import { runCommand, getOsname } from "./run-command.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const { name: package_name, version: package_version } = require("../package.json");
+
+const osname = await getOsname();
 
 // Create server instance
 const server = new McpServer({
@@ -15,10 +17,8 @@ const server = new McpServer({
   version: package_version,
 });
 
-
-
 server.tool("run-command",
-  "Run a command on the shell",
+  `Run a shell command in ${osname}`,
   {
     command: z.string().describe("Command with parameters to run on the shell")
   },
