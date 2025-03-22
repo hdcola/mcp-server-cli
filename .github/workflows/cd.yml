@@ -8,39 +8,45 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - name: Use Node.js 22.x
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-
-      - name: install shells
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y zsh
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: |
-          npm install
+          sudo apt-get update
+          sudo apt-get install -y zsh
+          pnpm install
 
       - name: Run tests
-        run: npm test
+        run: pnpm test
 
   publish:
     needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
-      - run: npm install
-      - run: npm build
-      - run: npm publish
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish package
+      - run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

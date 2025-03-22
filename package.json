@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "clean": "rm -rf build",
-    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "build": "tsc && npm i --package-lock-only && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
     "watch": "npm run build && tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector node build/index.js",
     "test": "jest",
